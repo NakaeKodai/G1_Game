@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        // PlayerPrefs.DeleteAll();
         playerLight = lightObject.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
     }
 
