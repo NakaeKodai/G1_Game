@@ -7,6 +7,7 @@ TagManager:
   - SpeedUp
   - LightUp
   - TimeUp
+  - Clear
   layers:
   - Default
   - TransparentFX

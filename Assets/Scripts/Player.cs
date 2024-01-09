@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Player : MonoBehaviour
@@ -14,10 +15,20 @@ public class Player : MonoBehaviour
     public GameObject lightObject;
     private UnityEngine.Rendering.Universal.Light2D playerLight;
 
+    private CountdownTimer timer;
+
+    Animator animator;
+
     void Start()
     {
         // PlayerPrefs.DeleteAll();
         playerLight = lightObject.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
+        timer = FindObjectOfType<CountdownTimer>();
+    }
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
     }
 
     
@@ -32,10 +43,17 @@ public class Player : MonoBehaviour
             {
                 x = 0;
             }
+
+            if(x != 0 || y != 0)
+            {
+                animator.SetFloat("InputX",x);
+                animator.SetFloat("InputY",y);
+            }
             
             StartCoroutine(Move(new Vector2(x,y)));
         }
         
+        animator.SetBool("IsMove",isMoving);
     }
 
 
@@ -80,7 +98,13 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("TimeUp"))
         {
-            
+            timer.AddTime(10f);
+        }
+
+        if (other.CompareTag("Clear"))
+        {
+            ScoreManager.instance.ClearScene();
+            // SceneManager.LoadScene("Clear");
         }
     }
 
@@ -99,13 +123,13 @@ public class Player : MonoBehaviour
     //ライトの範囲増加
     void StartLightBoost()
     {
-        playerLight.pointLightOuterRadius *= 2f;
+        playerLight.pointLightOuterRadius *= 3f;
         Invoke("EndLightBoost",statusUpTime);
     }
 
     void EndLightBoost()
     {
-        playerLight.pointLightOuterRadius /= 2f;
+        playerLight.pointLightOuterRadius /= 3f;
     }
     
 }

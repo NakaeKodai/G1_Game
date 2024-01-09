@@ -1,16 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CountdownTimer : MonoBehaviour
 {
-    public float totalTime = 60.0f; // 初期の制限時間（秒）
+    public float totalTime = 10.0f; // 初期の制限時間（秒）
     [HideInInspector] public float currentTime; // 現在の残り時間
     public Text timerText; // タイマー表示用のテキスト
     public Color warningColor = Color.red; // 残り時間が少ないときの文字色
+    public Color nomalColor;
     private bool hasTimeRunOut = false; // Debug.Logが一回だけ出力されるようにするためのフラグ
 
     void Start()
     {
+        nomalColor = timerText.color;
         currentTime = totalTime;
         UpdateTimerText();
     }
@@ -23,16 +26,18 @@ public class CountdownTimer : MonoBehaviour
             UpdateTimerText();
 
             // 残り3秒になったら文字の色を赤に変更
-            if (currentTime <= 3.0f)
+            if (currentTime <= 6.0f)
             {
                 timerText.color = warningColor;
             }
+            else timerText.color = nomalColor;
         }
         else if (!hasTimeRunOut)
         {
+            SceneManager.LoadScene("Failure");
             // 制限時間が終了したときの処理
-            Debug.Log("Time's up!");
-            hasTimeRunOut = true; // Debug.Logが一回だけ出力されるようにフラグを設定
+            // Debug.Log("Time's up!");
+            // hasTimeRunOut = true; // Debug.Logが一回だけ出力されるようにフラグを設定
         }
     }
 
