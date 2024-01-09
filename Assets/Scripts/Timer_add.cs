@@ -1,22 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer_add : MonoBehaviour
+public class ResettableTimer : MonoBehaviour
 {
     public Text timerText;
-    private float startTime;
+    private float elapsedTime;
 
     void Start()
     {
-        startTime = Time.time;
+        ResetTimer();
     }
 
     void Update()
     {
-        float t = Time.time - startTime;
-        string seconds = t.ToString("f2");
-        timerText.text = seconds;
+        elapsedTime += Time.deltaTime;
+        UpdateTimerText();
+    }
+
+    void UpdateTimerText()
+    {
+        timerText.text = FormatTime(elapsedTime);
+    }
+
+    string FormatTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60F);
+        int seconds = Mathf.FloorToInt(time - minutes * 60);
+        int milliseconds = Mathf.FloorToInt((time - minutes * 60 - seconds) * 1000);
+        string formattedTime = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        return formattedTime;
+    }
+
+    public void ResetTimer()
+    {
+        elapsedTime = 0.0f;
+        UpdateTimerText();
     }
 }
+
