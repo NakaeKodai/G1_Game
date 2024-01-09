@@ -63,7 +63,8 @@ public class Player : MonoBehaviour
     {
         return Physics2D.OverlapCircle(targetPos,0.5f,LimitLayer) == false;
     }
-
+    
+    //アイテム取得時のステータス変更
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("SpeedUp"))
@@ -75,8 +76,14 @@ public class Player : MonoBehaviour
         {
             StartLightBoost();
         }
+
+        if (other.CompareTag("TimeUp"))
+        {
+            
+        }
     }
 
+    //スピードアップ
     void StartSpeedBoost()
     {
         speed = 10;
@@ -88,6 +95,7 @@ public class Player : MonoBehaviour
         speed = 5;
     }
 
+    //ライトの範囲増加
     void StartLightBoost()
     {
         playerLight.pointLightOuterRadius *= 2f;
