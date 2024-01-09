@@ -5,19 +5,13 @@ using UnityEngine;
 public class ItemIvent : MonoBehaviour
 {
 
-    // private Player player;
+    public GameObject myObject;
 
-
-    // void Start()
-    // {
-    //     player = FindObjectOfType<Player>();
-    // }
-
-    // private void OnCollisionEnter2D(Collision2D other)
-    // {
-    //     if (other.gameObject.CompareTag("Player"))
-    //     {
-    //         player.speed = 10;
-    //     }
-    // }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            myObject.SetActive(false);
+        }
+    }
 }
