@@ -11,6 +11,13 @@ public class ScoreManager : MonoBehaviour
 
     private int score;
 
+    void Start()
+    {
+        score = 0;
+        PlayerPrefs.SetInt("Score", score);
+        PlayerPrefs.Save();
+    }
+
     void Awake()
     {
         if (instance == null)
